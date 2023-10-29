@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="img/fav.png">
+    <meta name="author" content="Corentin BESSONE">
+    <meta name="description" content="Corentin BESSONE - Data Analyst">
+    <meta name="keywords" content="data analyst, portfolio, personal website">
+    <title>Corentin BESSONE - Data Analyst</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/linearicons.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/project.css">
+</head>
+
+<body>
+    <header id="header">
+        <div class="container main-menu">
+            <div class="row align-items-center justify-content-between d-flex">
+                <div class id="logo">
+                    <a href="/"><h3>Corentin Bessone</h3></a>
+                </div>
+                <nav id="nav-menu-container">
+                    <ul class="nav-menu">
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="about.html">À propos</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+<!-- Banner -->
+<section class="about-banner">
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="about-content col-lg-12">
+                <h1 class="text-white">
+                    Bottleneck fine wine spirit 
+                </h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="home-about">
+    <div class="container">
+            <!-- Personal Details -->
+            <div class="contexte">
+                <h1 class="text-uppercase">Optimisation de la gestion des données d'une boutique avec Python</h1><br>
+                <p>Sylvie vous a fourni un fichier Excel de liaison entre les références du système ERP et du site de vente en ligne.</p> 
+                <p>Vous avez reçu deux fichiers Excel, l'un provenant de l'ERP et l'autre de la table des produits du site de vente en ligne.</p>
+                <p>Laurent vous a également donné des instructions claires pour votre mission en trois points :</p>
+                <h3 class="demande">Les demandes de Laurent :</h3>
+                <p>1. Rapprocher les deux exports en utilisant le fichier de liaison de Sylvie.</p>
+                <p>2. Calculer le chiffre d'affaires par produit et le chiffre d'affaires total réalisé en ligne.</p>
+                <p>3. Analyser les prix des produits pour détecter d'éventuelles valeurs aberrantes, les lister et les représenter graphiquement.</p>
+                <div class="bouton"><a href="#projet" class="primary-btn text-uppercase">Découvrez le code</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Timeline Section -->
+<section class="timeline pt-80 pb-80" id="project">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Dans le cadre de ce projet, j'ai utilisé Python</h2><br>
+                <h3>Les demandes de Laurent : </h3><br>
+                <div class="timeline-item">
+                    <h4>Mise en place de l'environement de travail et vérification des données</h4>
+                    <pre>
+                        import pandas as pd 
+                        import numpy as np 
+                        import matplotlib.pyplot as plt
+                        import seaborn as sns
+                        
+                        erp = pd.read_csv("erp.csv")
+                        web = pd.read_csv("web.csv")
+                        liaison = pd.read_csv("liaison.csv")
+                        # On affiche les premieres ligne du fichier;
+                        erp.head()
+                        # on vérifie les valeurs manquantes sur le fichier;
+                        erp.isnull().sum()
+                        # On affiche les premieres ligne du fichier;
+                        web.head()
+                        # on vérifie les valeurs manquantes sur le fichier;
+                        web.isnull().sum()
+                        # on supprime tous les valeurs manquantes;
+                        web.dropna(subset= ['sku','post_mime_type'],inplace= True)
+                        # On affiche les premieres ligne du fichier;
+                        liaison
+                        # on vérifie les valeurs manquantes sur le fichier;
+                        liaison.isnull().sum()
+                        # on supprime tous les valeurs manquantes;
+                        liaison.dropna(inplace= True)
+                    </pre>
+                    <h4>Output : </h4>
+                    <pre>
+                        <p>ERP premiere ligne:</p>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>product_id</th>
+                                <th>onsale_web</th>
+                                <th>price</th>
+                                <th>stock_quantity</th>
+                                <th>stock_status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>0</th>
+                                <td>3847</td>
+                                <td>1</td>
+                                <td>24.2</td>
+                                <td>0</td>
+                                <td>outofstock</td>
+                            </tr>
+                            <tr>
+                                <th>1</th>
+                                <td>3849</td>
+                                <td>1</td>
+                                <td>34.3</td>
+                                <td>0</td>
+                                <td>outofstock</td>
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <td>3850</td>
+                                <td>1</td>
+                                <td>20.8</td>
+                                <td>0</td>
+                                <td>outofstock</td>
+                            </tr>
+                            <tr>
+                                <th>3</th>
+                                <td>4032</td>
+                                <td>1</td>
+                                <td>14.1</td>
+                                <td>0</td>
+                                <td>outofstock</td>
+                            </tr>
+                            <tr>
+                                <th>4</th>
+                                <td>4039</td>
+                                <td>1</td>
+                                <td>46.0</td>
+                                <td>0</td>
+                                <td>outofstock</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p>Valeur manquante ERP:</p>
+                        product_id        0
+                        onsale_web        0
+                        price             0
+                        stock_quantity    0
+                        stock_status      0
+                        dtype: int64
+                        <p>Web premiere ligne:</p>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>sku</th>
+                                <th>virtual</th>
+                                <th>downloadable</th>
+                                <th>rating_count</th>
+                                <th>average_rating</th>
+                                <th>total_sales</th>
+                                <th>tax_status</th>
+                                <th>tax_class</th>
+                                <th>post_author</th>
+                                <th>post_date</th>
+                                <th>...</th>
+                                <th>post_name</th>
+                                <th>post_modified</th>
+                                <th>post_modified_gmt</th>
+                                <th>post_content_filtered</th>
+                                <th>post_parent</th>
+                                <th>guid</th>
+                                <th>menu_order</th>
+                                <th>post_type</th>
+                                <th>post_mime_type</th>
+                                <th>comment_count</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>0</th>
+                                <td>bon-cadeau-25-euros</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0.0</td>
+                                <td>10.0</td>
+                                <td>taxable</td>
+                                <td>NaN</td>
+                                <td>1.0</td>
+                                <td>2018-06-01 13:53:46</td>
+                                <td>...</td>
+                                <td>bon-cadeau-de-25-euros</td>
+                                <td>2018-06-01 14:13:57</td>
+                                <td>2018-06-01 12:13:57</td>
+                                <td>NaN</td>
+                                <td>0.0</td>
+                                <td>https://www.bottle-neck.fr/?post_type=product&amp;...</td>
+                                <td>0.0</td>
+                                <td>product</td>
+                                <td>NaN</td>
+                                <td>0.0</td>
+                            </tr>
+                            <tr>
+                                <th>1</th>
+                                <td>15298</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0.0</td>
+                                <td>6.0</td>
+                                <td>taxable</td>
+                                <td>NaN</td>
+                                <td>2.0</td>
+                                <td>2018-02-08 12:58:52</td>
+                                <td>...</td>
+                                <td>pierre-jean-villa-saint-joseph-preface-2018</td>
+                                <td>2019-12-30 09:30:29</td>
+                                <td>2019-12-30 08:30:29</td>
+                                <td>NaN</td>
+                                <td>0.0</td>
+                                <td>https://www.bottle-neck.fr/?post_type=product&amp;...</td>
+                                <td>0.0</td>
+                                <td>product</td>
+                                <td>NaN</td>
+                                <td>0.0</td>
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <td>15296</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                                <td>taxable</td>
+                                <td>NaN</td>
+                                <td>2.0</td>
+                                <td>2018-02-08 13:49:41</td>
+                                <td>...</td>
+                                <td>pierre-jean-villa-saint-joseph-tilde-2017</td>
+                                <td>2019-12-21 09:00:17</td>
+                                <td>2019-12-21 08:00:17</td>
+                                <td>NaN</td>
+                                <td>0.0</td>
+                                <td>https://www.bottle-neck.fr/?post_type=product&amp;...</td>
+                                <td>0.0</td>
+                                <td>product</td>
+                                <td>NaN</td>
+                                <td>0.0</td>
+                            </tr>
+                            <tr>
+                                <th>3</th>
+                                <td>15300</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                                <td>taxable</td>
+                                <td>NaN</td>
+                                <td>2.0</td>
+                                <td>2018-02-08 14:08:36</td>
+                                <td>...</td>
+                                <td>pierre-jean-villa-croze-hermitage-accroche-coe...</td>
+                                <td>2020-06-26 18:15:03</td>
+                                <td>2020-06-26 16:15:03</td>
+                                <td>NaN</td>
+                                <td>0.0</td>
+                                <td>https://www.bottle-neck.fr/?post_type=product&amp;...</td>
+                                <td>0.0</td>
+                                <td>product</td>
+                                <td>NaN</td>
+                                <td>0.0</td>
+                            </tr>
+                            <tr>
+                                <th>4</th>
+                                <td>19814</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0.0</td>
+                                <td>3.0</td>
+                                <td>taxable</td>
+                                <td>NaN</td>
+                                <td>2.0</td>
+                                <td>2018-02-09 14:01:05</td>
+                                <td>...</td>
+                                <td>pierre-jean-villa-igp-gamine-2018</td>
+                                <td>2020-01-04 16:36:01</td>
+                                <td>2020-01-04 15:36:01</td>
+                                <td>NaN</td>
+                                <td>0.0</td>
+                                <td>https://www.bottle-neck.fr/?post_type=product&amp;...</td>
+                                <td>0.0</td>
+                                <td>product</td>
+                                <td>NaN</td>
+                                <td>0.0</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p>Valeur manquante Web:</p>
+                        sku                        85
+                        virtual                     0
+                        downloadable                0
+                        rating_count                0
+                        average_rating             83
+                        total_sales                83
+                        tax_status                797
+                        tax_class                1513
+                        post_author                83
+                        post_date                  83
+                        post_date_gmt              83
+                        post_content             1513
+                        post_title                 83
+                        post_excerpt              797
+                        post_status                83
+                        comment_status             83
+                        ping_status                83
+                        post_password            1513
+                        post_name                  83
+                        post_modified              83
+                        post_modified_gmt          83
+                        post_content_filtered    1513
+                        post_parent                83
+                        guid                       83
+                        menu_order                 83
+                        post_type                  83
+                        post_mime_type            799
+                        comment_count              83
+                        dtype: int64
+                        <p>Premiere ligne Liaison:</p>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>product_id</th>
+                                <th>id_web</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>0</th>
+                                <td>3847</td>
+                                <td>15298</td>
+                            </tr>
+                            <tr>
+                                <th>1</th>
+                                <td>3849</td>
+                                <td>15296</td>
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <td>3850</td>
+                                <td>15300</td>
+                            </tr>
+                            <tr>
+                                <th>3</th>
+                                <td>4032</td>
+                                <td>19814</td>
+                            </tr>
+                            <tr>
+                                <th>4</th>
+                                <td>4039</td>
+                                <td>19815</td>
+                            </tr>
+                            <tr>
+                                <th>...</th>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                            <tr>
+                                <th>820</th>
+                                <td>7203</td>
+                                <td>NaN</td>
+                            </tr>
+                            <tr>
+                                <th>821</th>
+                                <td>7204</td>
+                                <td>NaN</td>
+                            </tr>
+                            <tr>
+                                <th>822</th>
+                                <td>7247</td>
+                                <td>13127-1</td>
+                            </tr>
+                            <tr>
+                                <th>823</th>
+                                <td>7329</td>
+                                <td>14680-1</td>
+                            </tr>
+                            <tr>
+                                <th>824</th>
+                                <td>7338</td>
+                                <td>16230</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p>Valeur manquante liaison:</p>
+                        product_id     0
+                        id_web        91
+                        dtype: int64
+                    </pre>
+                </div>
+
+                <!-- Question 1 -->
+                <div class="timeline-item">
+                    <h4>Question 1</h4>
+                    <p>1. Rapprocher les deux exports en utilisant le fichier de liaison de Sylvie.</p>
+                    <pre>
+                        # Requete 1: mise en relation erp et web; 
+                        web.rename(columns={'sku': 'id_web'}, inplace=True)
+                        liaison_erp = pd.merge(erp,liaison)
+                        tableau = pd.merge(web, liaison_erp, how = 'left', on= ['id_web'])
+                        tableau.shape                    </pre>
+                    <h4>Résultat de la Question 1</h4>
+                    <pre>
+                        (714, 33)
+                    </pre>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="timeline-item">
+                    <h4>Question 2</h4>
+                    <p>2. Calculer le chiffre d'affaires par produit et le chiffre d'affaires total réalisé en ligne.</p>
+                    <pre>
+                        # requete 2: chiffre d'affaire par produit et chiffre d'affaitre total en ligne;
+
+                        tableau.insert(4,'CA_product',tableau['price'] * tableau['total_sales'])
+                        CA = tableau[["product_id", "id_web", "price", "total_sales", "CA_product"]]
+                        CA
+                        print("Le chiffre d'affaire total est de : ", tableau['CA_product'].sum(),'€')
+                    </pre>
+                    <h4>Résultat de la Question 2</h4>
+                    <pre>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>product_id</th>
+                                <th>id_web</th>
+                                <th>price</th>
+                                <th>total_sales</th>
+                                <th>CA_product</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>0</th>
+                                <td>3847</td>
+                                <td>15298</td>
+                                <td>24.2</td>
+                                <td>6.0</td>
+                                <td>145.2</td>
+                            </tr>
+                            <tr>
+                                <th>1</th>
+                                <td>3849</td>
+                                <td>15296</td>
+                                <td>34.3</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <td>3850</td>
+                                <td>15300</td>
+                                <td>20.8</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                            </tr>
+                            <tr>
+                                <th>3</th>
+                                <td>4032</td>
+                                <td>19814</td>
+                                <td>14.1</td>
+                                <td>3.0</td>
+                                <td>42.3</td>
+                            </tr>
+                            <tr>
+                                <th>4</th>
+                                <td>4039</td>
+                                <td>19815</td>
+                                <td>46.0</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                            </tr>
+                            <tr>
+                                <th>...</th>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                            <tr>
+                                <th>709</th>
+                                <td>6930</td>
+                                <td>16135</td>
+                                <td>8.4</td>
+                                <td>5.0</td>
+                                <td>42.0</td>
+                            </tr>
+                            <tr>
+                                <th>710</th>
+                                <td>7023</td>
+                                <td>15891</td>
+                                <td>27.5</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                            </tr>
+                            <tr>
+                                <th>711</th>
+                                <td>7025</td>
+                                <td>15887</td>
+                                <td>69.0</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                            </tr>
+                            <tr>
+                                <th>712</th>
+                                <td>7247</td>
+                                <td>13127-1</td>
+                                <td>54.8</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                            </tr>
+                            <tr>
+                                <th>713</th>
+                                <td>7338</td>
+                                <td>16230</td>
+                                <td>16.3</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                            </tr>
+                            </tbody>
+                        </table> 
+                        Le chiffre d'affaire total est de :  70568.6 €
+                   
+                    </pre>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="timeline-item">
+                    <h4>Question 3</h4>
+                    <p>3. Analyser les prix des produits pour détecter d'éventuelles valeurs aberrantes, les lister et les représenter graphiquement.</p>
+                    <pre>
+                        # requete 3: Analyse des prix des produits pour détecter d'éventuelles valeurs aberrantes, les lister et les représenter graphiquement.
+
+                        # on repère visuellement les outliers 
+                        plt.figure(figsize=(5,10))
+                        sns.boxplot(y = tableau['price'])
+                        plt.title('boxplot des prix')
+                        plt.show()                 
+                    </pre>
+                    <h4>Résultat de la Question 3</h4>
+                    <img src="img/output.png" alt="outlier">
+                </div>
+
+                <!-- Question 3 suite -->
+                <div class="timeline-item">
+                    <p>Question 3 suite :</p>
+                    <pre>
+                        # on repere mathématiquement les outliers 
+
+                        # méthode interquartille
+                        # quartille q1, q3 et écart inter:
+                         
+                        price = sorted(tableau['price'])
+                        q1 = round(np.percentile(price, 25))
+                        print("Le premier quartille q1 est de:", q1)
+                        q3 = round(np.percentile(price, 75))
+                        print("Le troisieme quartille q3 est de:", q3)
+                        iqr = q3 - q1
+                        print("L'écart interquartille iqr est de:", iqr)
+                        
+                        # borne inf et sup: 
+                        
+                        lower_bound = q1 -(1.5 * iqr)
+                        upper_bound = q3 +(1.5 * iqr)
+                        print('les valeurs sont considéré comme abérante si elles sont compris hors de l intervalle, ',
+                        lower_bound, upper_bound, 'selon la méthode interquartille')
+                        
+                        # mise en évidences du nbrs de valeurs abérantes: 
+                        
+                        tableau_outliers_up= tableau[tableau["price"]>upper_bound]
+                        val_abe_up = tableau_outliers_up['price'].count()
+                        tableau_outliers_down = tableau[tableau["price"]"<"lower_bound]
+                        val_abe_down = tableau_outliers_down['price'].count()
+                        print("Le nombre de valeurs abérantes est de:", val_abe_up + val_abe_down)                                       
+                    </pre>
+                    <h4>Résultat de la Question 3 suite </h4>
+                    <pre>Le premier quartille q1 est de: 14
+                        Le troisieme quartille q3 est de: 42
+                        L'écart interquartille iqr est de: 28
+                        les valeurs sont considéré comme abérante si elles sont compris hors de l intervalle,  -28.0 84.0 selon la méthode interquartille
+                        Le nombre de valeurs abérantes est de: 32
+                    </pre>
+                </div>
+
+                <!-- Question 3 suite -->
+                <div class="timeline-item">
+                    <p>Question 3 suite :</p>
+                    <pre>
+                        # On se créé 2 DataFrame pour séparé les couleurs
+                        price_ok = tableau[(tableau['price'] < upper_bound) & (tableau['price'] > lower_bound)]
+                        price_outliers = tableau_outliers_up 
+                        
+                        # On creer le schema scatter; 
+                        plt.figure(figsize=(15,7))
+                        plt.scatter(price_ok['price'].index, price_ok['price'].values, label= 'prix')
+                        plt.scatter(price_outliers['price'].index, price_outliers['price'].values,c='red', label= 'valeurs abérantes')
+                        plt.title('Nuage de point des prix et valeurs abérantes')
+                        plt.xlabel('index')
+                        plt.ylabel('price')
+                        plt.legend(loc="upper left")
+                        plt.show()            
+                    </pre>
+                    <h4>Résultat de la Question 3 suite </h4>
+                    <img src="img/output2.png" alt="outlier">
+                </div>
+
+                <!-- Question 3 suite -->
+                <div class="timeline-item">
+                    <p>Question 3 suite :</p>
+                    <pre>
+                        #methode z score
+
+                        mean = np.mean(tableau['price'])
+                        std = np.std(tableau['price'])
+                        print('la moyenne des prix est de:', mean)
+                        print("l'écart type des prix est de:", std)
+                        #valeur abérantes avec zscore:
+                        limite = 3
+                        limite_down = -3
+                        outlier = []
+                        for VA_abe in tableau['price']:
+                            z = (VA_abe-mean)/std
+                            if z > limite:
+                                outlier.append(VA_abe)
+                                
+                            elif z < limite_down:
+                                outlier.append(VA_abe)
+                        
+                        print('les valeurs abérantes sont:', outlier)
+                        # affichage du nbrs de valeurs abérantes 
+                        tableau['zscore']= (tableau['price']-mean)/std
+                        val_sup = tableau[tableau['zscore']>3]
+                        val_inf = tableau[tableau['zscore']<-3]
+                        sup = val_sup['price'].count()
+                        inf = val_inf['price'].count()
+                        print("Les valeurs abérantes selon la méthode zscore sont de:",sup + inf)                
+                    </pre>
+                    <h4>Résultat de la Question 3 suite </h4>
+                    <pre>
+                        la moyenne des prix est de: 32.49313725490197
+                        l'écart type des prix est de: 27.791042941002935
+                        les valeurs abérantes sont: [225.0, 126.5, 176.0, 157.0, 137.0, 217.5, 124.8, 175.0, 191.3, 122.0, 135.0, 116.4, 121.0, 121.0]
+                        Les valeurs abérantes selon la méthode zscore sont de: 14
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer-area section-gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h4>À propos de cette page</h4>
+                    <p>Ce site a été créé pour présenter mes compétences en data analyst et mes projets en tant qu'entrepreneur. N'hésitez pas à me contacter pour toute opportunité de collaboration.</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h4>Contact</h4>
+                    <p>Email : corentin.bessone@hotmail.fr</p>
+                    <p>Téléphone : (+33) 7-67-78-54-91 / (+61) 481-873-678</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="js/FAQ.js"></script>
+<script src="js/projet.js"></script>
+</body>
+</html>

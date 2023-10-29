@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="img/fav.png">
+    <meta name="author" content="Corentin BESSONE">
+    <meta name="description" content="Corentin BESSONE - Data Analyst">
+    <meta name="keywords" content="data analyst, portfolio, personal website">
+    <title>Corentin BESSONE - Data Analyst</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/linearicons.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/project.css">
+</head>
+
+<body>
+    <header id="header">
+        <div class="container main-menu">
+            <div class="row align-items-center justify-content-between d-flex">
+                <div class id="logo">
+                    <a href="/"><h3>Corentin Bessone</h3></a>
+                </div>
+                <nav id="nav-menu-container">
+                    <ul class="nav-menu">
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="about.html">À propos</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+<!-- Banner -->
+<section class="about-banner">
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="about-content col-lg-12">
+                <h1 class="text-white">
+                    Laplace Immo
+                </h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="home-about">
+    <div class="container">
+            <!-- Personal Details -->
+            <div class="contexte">
+                <h1 class="text-uppercase">Analyse et Modélisation des Transactions Immobilières </h1><br>
+                <p>Je travaille en tant que data analyst au sein de Laplace Immo, dans le cadre de notre projet stratégique interne, baptisé "DATAImmo", notre CTO, Clara Daucourt, m'a confié la tâche de modifier notre base de données existante pour améliorer nos capacités d'analyse du marché immobilier et  d'aide aux agences régionales dans l'accompagnement de leurs clients.</p>
+                <p>Pour mener à bien cette mission, j'ai reçu un e-mail de Clara qui m'a demandé de travailler sur les données extraites de diverses sources, Elle m'a demandé de :</p>    
+                <p>1. Préparer un dictionnaire des données en respectant un modèle fourni, couvrant les trois jeux de données.
+                <p>2. Modifier le schéma relationnel existant pour inclure les nouvelles données relatives à la région et à la population, et présenter ce nouveau schéma dans un format normalisé (norme 3NF).</p>
+                <p>Après avoir présenté mon travail à Clara lors de cette réunion, elle a validé à la fois le schéma relationnel modifié et le dictionnaire des données. À ce stade du projet, je peux désormais passer à l'étape suivante.</p>
+                <p>Pour cet exercice, les demandes comprennent diverses requêtes SQL et vues que je dois mettre en place dans la base de données pour extraire des informations essentielles. 
+                Ces requêtes portent sur des domaines tels que le nombre d'appartements vendus, l'évolution des prix, les moyennes de prix par région, le nombre d'appartements par nombre de pièces principales, 
+                et bien d'autres. Mon objectif est de collecter les données nécessaires et de les présenter sous forme de résultats de requêtes.</p>
+                <div class="bouton"><a href="#projet" class="primary-btn text-uppercase">Découvrez le code</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Timeline Section -->
+<section class="timeline pt-80 pb-80" id="project">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Requêtes SQL et Résultats</h2>
+
+                <!-- Question 1 -->
+                <div class="timeline-item">
+                    <h3>Question 1</h3>
+                    <p>Combien d'appartements ont été vendus au cours du premier semestre de 2020 ?</p>
+                    <pre>
+                        SELECT COUNT(CASE WHEN (type_local = 'Appartement')
+                        AND (date_mutation BETWEEN '2020-01-01' AND '2020-06-30') AND (nature_mutation = 'Vente') THEN 1 END) AS "Le nombre d'appartement vendu le premier semestre de 2020 est:"
+                        FROM bien b
+                        JOIN local l ON b.code_type_local = l.code_type_local;                        
+                    </pre>
+                    <h4>Résultat de la Question 1</h4>
+                    <pre>
+                        Le nombre d'appartement vendu le premier semestre de 2020 est:
+                        31378
+                    </pre>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="timeline-item">
+                    <h3>Question 2</h3>
+                    <p>Combien d'appartements ont été vendus par région au cours du premier semestre 2020 ?</p>
+                    <pre>
+                        SELECT
+                            CONCAT(
+                                CAST(COUNT(nature_mutation) AS FLOAT) /
+                                (SELECT CAST(COUNT(nature_mutation) AS FLOAT)
+                                FROM bien b
+                                JOIN local l ON b.code_type_local = l.code_type_local
+                                WHERE type_local = 'Appartement') * 100, '%'
+                            ) AS nombres_appartements,
+                            nombres_pieces_principales
+                        FROM bien b
+                        JOIN local l ON b.code_type_local = l.code_type_local
+                        WHERE type_local = 'Appartement'
+                        GROUP BY nbrs_pieces_principales
+                        ORDER BY nbrs_pieces_principales;
+                    </pre>
+                    <h4>Résultat de la Question 2</h4>
+                    <pre>
+                        | nombres_appartements   | nombres_pieces_principales  |
+                        |----------------------- |-----------------------------|
+                        | 0,09560838804257760 %  | 0                           |
+                        | 21,476830900631000 %   | 1                           |
+                        | 31,177895340684604 %   | 2                           |
+                        | 28,574160239658404 %   | 3                           |
+                        | 14,213780355663200 %   | 4                           |
+                        | 3,550258142647720 %    | 5                           |
+                        | 0,6501370386895280 %   | 6                           |
+                        | 0,17209509847664000 %  | 7                           |
+                        | 0,05417808655746060 %  | 8                           |
+                        | 0,025495570144687400 % | 9                           |
+                        | 0,0063738925361718400 %| 10                          |
+                        | 0,0031869462680859200 %| 11                          |
+                        
+                        
+                    </pre>
+                        
+                        
+                        
+                </div>
+
+                <!-- Question 3 -->
+                <div class="timeline-item">
+                    <h3>Question 3</h3>
+                    <p>Quelles sont les dix départements où le prix du mètre carré est le plus élevé ?</p>
+                    <pre>
+                        SELECT code_dep, AVG(valeur_fonc / surface_bati) AS avg
+                        FROM bien b
+                        JOIN commune c ON c.id_code_commune = b.id_code_commune
+                        GROUP BY code_dep
+                        ORDER BY avg DESC
+                        LIMIT 10;                        
+                        </pre>
+                    <h4>Résultat de la Question 3</h4>
+                    <pre>
+                        | code_dep | avg              |
+                        | -------- | ---------------  |
+                        | 75       | 12129,3942661666 |
+                        | 92       | 7415,28487382265 |
+                        | 94       | 5398,77865907106 |
+                        | 6        | 4685,24614855627 |
+                        | 93       | 4371,13865505885 |
+                        | 74       | 4149,55696972929 |
+                        | 78       | 4126,18585454692 |
+                        | 69       | 4063,83239138579 |
+                        | 2A       | 3921,65453011098 |
+                        | 33       | 3838,7434475277  |
+                        
+                        </pre>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="timeline-item">
+                    <h3>Question 4</h3>
+                    <p>Quel est le prix moyen du mètre carré d'une maison en Île-de-France ?</p>
+                    <pre>
+                        SELECT CAST(AVG(valeur_fonc / surface_bati) AS DECIMAL(10,2), "€") AS "Le prix moyen du mètre carré d'une maison en Île-de-France est de:"
+                        FROM Bien b
+                        JOIN commune c ON b.id_code_commune = c.id_code_commune
+                        JOIN local l ON b.code_type_local = l.code_type_local
+                        WHERE code_dep IN ('75', '77', '91', '78', '95', '93', '92', '94') AND type_local = 'Maison';
+                    </pre>
+                    <h4>Résultat de la Question 4</h4>
+                    <pre>
+                        Le prix moyen du mètre carré d'une maison en Île-de-France est de:
+                        3997.71 €
+                    </pre>
+                </div>
+
+                <!-- Question 5-->
+                <div class="timeline-item">
+                    <h3>Question 5</h3>
+                    <p>Quel est le taux d'évolution du nombre de ventes entre le premier et le second trimestre de 2020 ?</p>
+                    <pre>
+                        -- Création de la vue premier_trim
+                        CREATE OR REPLACE VIEW premier_trim AS
+                        SELECT count(date_mutation) AS premier_trim
+                        FROM bien
+                        WHERE date_mutation BETWEEN '2020-01-01' AND '2020-03-31';
+                        
+                        -- Création de la vue second_trim
+                        CREATE OR REPLACE VIEW second_trim AS
+                        SELECT count(date_mutation) AS second_trim
+                        FROM bien
+                        WHERE date_mutation BETWEEN '2020-04-01' AND '2020-06-30';
+                        
+                        -- Calcul du taux d'évolution
+                        SELECT concat(round((cast(second_trim as numeric) - cast(premier_trim as numeric)) / premier_trim * 100, 2), '%') as "Le taux d'évolution du prix entre le premier et second trimestre est de: "
+                        FROM premier_trim, second_trim;
+                        </pre>
+                    <h4>Résultat de la Question 5</h4>
+                    <pre>
+                        Le taux d'évolution du prix entre le premier et second trimestre est de:
+                        3.68 %
+                    </pre>
+                </div>
+
+                <!-- Question 6-->
+                <div class="timeline-item">
+                    <h3>Question 6</h3>
+                    <p>Quelles sont les  moyennes de valeurs foncières pour le top 3 des communes des départements 6, 13, 33, 59 et 69 ?</p>
+                    <pre>
+                        -- Créez la vue "moyenne_val_fonc"
+                        CREATE VIEW moyenne_val_fonc AS
+                        SELECT
+                            nom_commune AS commune,
+                            code_dep,
+                            ROUND(AVG(valeur_fonc)) AS "valeur fonciere",
+                            ROW_NUMBER() OVER (PARTITION BY code_dep ORDER BY AVG(valeur_fonc) DESC) AS "id"
+                        FROM
+                            bien b
+                        JOIN
+                            commune c ON b.id_code_commune = c.id_code_commune
+                        WHERE
+                            code_dep IN ('6', '13', '33', '59', '69')
+                        GROUP BY
+                            nom_commune, code_dep;
+                        
+                        -- Sélectionnez les enregistrements de la vue où "id" est inférieur ou égal à 3
+                        SELECT *
+                        FROM
+                            moyenne_val_fonc
+                        WHERE
+                            id <= 3;                        
+                        </pre>
+                    <h4>Résultat de la Question 6</h4>
+                    <pre>
+                        | code_dep              | valeur fonciere           | id |
+                        |-----------------------|---------------------------|----|
+                        | GIGNAC-LA-NERTHE      | 13              | 330,000 | 1  |
+                        | SAINT SAVOURNIN       | 13              | 314,425 | 2  |
+                        | CASSIS                | 13              | 313,417 | 3  |
+                        | LEGE-CAP-FERRET       | 33              | 549,501 | 1  |
+                        | VAYRES                | 33              | 335,000 | 2  |
+                        | ARCACHON              | 33              | 307,436 | 3  |
+                        | BERSEE                | 59              | 433,202 | 1  |
+                        | CYSOING               | 59              | 408,550 | 2  |
+                        | HALLUIN               | 59              | 322,250 | 3  |
+                        | SAINT-JEAN-CAP-FERRAT | 6               | 968,750 | 1  |
+                        | EZE                   | 6               | 655,000 | 2  |
+                        | MOUANS-SARTOUX        | 6               | 476,898 | 3  |
+                        | VILLE SUR JARNIOUX    | 69              | 485,300 | 1  |
+                        | LYON 2EME             | 69              | 455,217 | 2  |
+                        | LYON 6EME             | 69              | 426,968 | 3  |
+                    </pre>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="timeline-item">
+                    <h3>Question 7</h3>
+                    <p>Quelle est la différence en pourcentage du prix au mètre carré entre un appartement de 2 pièces et un appartement de 3 pièces ?</p>
+                    <pre>
+                        -- Création de la vue pour les appartements de 2 pièces
+                        CREATE OR REPLACE VIEW prix_2pieces AS
+                        SELECT AVG(valeur_fonc / surface_bati) AS prix_m2_2pieces
+                        FROM bien b
+                        JOIN local l ON b.code_type_local = l.code_type_local
+                        WHERE nbrs_pieces_principales = 2 AND type_local = 'Appartement';
+
+                        -- Création de la vue pour les appartements de 3 pièces
+                        CREATE OR REPLACE VIEW prix_3pieces AS
+                        SELECT AVG(valeur_fonc / surface_bati) AS prix_m2_3pieces
+                        FROM bien b
+                        JOIN local l ON b.code_type_local = l.code_type_local
+                        WHERE nbrs_pieces_principales = 3 AND type_local = 'Appartement';
+
+                        -- Calcul du pourcentage d'augmentation du prix au mètre carré
+                        SELECT CONCAT(
+                        ROUND(
+                            (SUM((prix_m2_3pieces - prix_m2_2pieces) / prix_m2_2pieces) * 100)::NUMERIC,
+                            2),'%') AS "La différence du prix au m2 est de:"
+                        FROM prix_2pieces, prix_3pieces;
+                    </pre>
+                    <h4>Résultat de la Question 7</h4>
+                    <pre>
+                        La différence du prix au m2 est de:
+                        -13.1257790461097 %
+                    </pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<footer class="footer-area section-gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h4>À propos de cette page</h4>
+                    <p>Ce site a été créé pour présenter mes compétences en data analyst et mes projets en tant qu'entrepreneur. N'hésitez pas à me contacter pour toute opportunité de collaboration.</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h4>Contact</h4>
+                    <p>Email : corentin.bessone@hotmail.fr</p>
+                    <p>Téléphone : (+33) 7-67-78-54-91 / (+61) 481-873-678</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="js/FAQ.js"></script>
+<script src="js/projet.js"></script>
+</body>
+</html>

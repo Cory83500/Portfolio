@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="img/fav.png">
+    <meta name="author" content="Corentin BESSONE">
+    <meta name="description" content="Corentin BESSONE - Data Analyst">
+    <meta name="keywords" content="data analyst, portfolio, personal website">
+    <title>Corentin BESSONE - Data Analyst</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/linearicons.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/project.css">
+</head>
+
+<body>
+    <header id="header">
+        <div class="container main-menu">
+            <div class="row align-items-center justify-content-between d-flex">
+                <div class id="logo">
+                    <a href="/"><h3>Corentin Bessone</h3></a>
+                </div>
+                <nav id="nav-menu-container">
+                    <ul class="nav-menu">
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="about.html">À propos</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+<!-- Banner -->
+<section class="about-banner">
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="about-content col-lg-12">
+                <h1 class="text-white">
+                    F.A.O 
+                </h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="home-about">
+    <div class="container">
+            <!-- Personal Details -->
+            <div class="contexte">
+                <h1 class="text-uppercase">Réalisation d'une étude de Santé </h1><br>
+                <p>J'ai eu l'opportunité de collaborer avec l'Organisation des Nations Unies pour l'Alimentation et l'Agriculture (FAO) dans le cadre d'un projet d'ampleur visant à lutter contre la sous-nutrition dans le monde.</p>
+                <p>Mon arrivée au sein de l'équipe dirigée par Marc était particulièrement attendue car l'ancien data analyst avait été muté dans une autre équipe.</p> 
+                <p>Notre mission consistait à mener une étude approfondie en utilisant les données fournies dans le dossier en pièce jointe, et à répondre aux demandes spécifiques formulées par Marc et Mélanie, une autre chercheuse de l'équipe.</p>
+                <h3 class="demande">Les demandes de Marc:</h3>
+                <p>1. Analyse de la proportion de personnes en état de sous-nutrition pour l'année 2017.</p>
+                <p>2. Calcul du nombre théorique de personnes qui pourraient être nourries à partir de la disponibilité alimentaire mondiale.</p>
+                <p>3. Évaluation de la disponibilité alimentaire des produits végétaux pour 2017.</p>
+                <p>4. Analyse de l'utilisation de la disponibilité intérieure, en particulier en distinguant la part attribuée à l'alimentation animale, les pertes et l'utilisation pour l'alimentation humaine.</p>
+                <h3 class="demande">Les demandes de Mélanie:</h3>
+                <p>1. Réalisation d'une étude détaillée pour chaque pays, mettant en évidence les pays ayant la proportion la plus élevée de personnes sous-alimentées en 2017.</p>
+                <p>2. Identification des pays qui ont bénéficié le plus de l'aide depuis 2013.</p>
+                <p>3. Analyse des pays ayant la plus grande et la plus faible disponibilité alimentaire par habitant.</p>
+                <p>4. Toutes autres informations pertinentes permettant de mettre en évidence les pays confrontés à des difficultés alimentaires.</p>
+
+                    <div class="bouton"><a href="#projet" class="primary-btn text-uppercase">Découvrez le code</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Timeline Section -->
+<section class="timeline pt-80 pb-80" id="project">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Dans le cadre de ce projet, j'ai utilisé Python</h2><br>
+                <h3>Les demandes de Marc : </h3><br>
+                <div class="timeline-item">
+                    <h4>Mise en place de l'environement de travail</h4>
+                    <pre>
+                        import pandas as pd
+                        import numpy as np
+                        
+                        # Nous ouvrons tous nos dossiers et les renommons pour plus de clarté
+                        sous_nutri = pd.read_csv("sous_nutrition.csv")
+                        dispo_ali = pd.read_csv("dispo_alimentaire.csv")
+                        popu = pd.read_csv("population.csv")
+                        aide_ali = pd.read_csv("aide_alimentaire.csv")
+                    </pre>
+                </div>
+
+                <!-- Question 1 -->
+                <div class="timeline-item">
+                    <h4>Question 1</h4>
+                    <p>1. Analyse de la proportion de personnes en état de sous-nutrition pour l'année 2017.</p>
+                    <pre>
+                        # nous selectionnons les valeurs de l'Année 2017 en prenant l'intervalle 2016-2018
+                        sous_nutri_2017 = sous_nutri.loc[sous_nutri["Année"] == '2016-2018'] 
+                        sous_nutri_2017 ['Population'] = pd.to_numeric(sous_nutri_2017 ['Population'], errors='coerce')
+                        sous_nutri_2017 .fillna(0, inplace=True)
+                        
+                        # nous créons une variable b correspondant à la population mondial en 2017
+                        popu_2017 = popu.loc[popu["Année"]== 2017]
+                        
+                        # on fusionne nous deux dataframe en une en fusionnant les zones
+                        tableau = pd.merge(sous_nutri_2017 ,popu_2017, on = ["Zone"])
+                        
+                        # on supprime les colonnes inutiles 
+                        del tableau["Année_x"]
+                        
+                        # on réorganise les zone et les renommons 
+                        tableau = tableau[["Zone","Année_y","Population_x","Population_y"]]
+                        tableau.columns = ["Zone","Année","Population en sous nutrition", "Population mondial"]
+                        
+                        # on réajuste les colonnes au même grandeur
+                        tableau["Population en sous nutrition"] = tableau["Population en sous nutrition"] * 1000000
+                        tableau["Population mondial"] = tableau["Population mondial"] * 1000
+                        
+                        # on crée une nouvelle colonne moyenne en faisant le pourcentage de sous nutrition par zone et on arrondi à 1
+                        tableau.insert(4, "moyenne", ((tableau["Population en sous nutrition"]*100) / tableau["Population mondial"]))
+                        tableau["moyenne"] = tableau["moyenne"].round(1)
+                        
+                        # on crée une nouvelle colonne moyenne total en faisant le pourcentage total de sous nutrition dans le monde 
+                        tableau.insert(5, "moyenne total", ( (tableau["Population en sous nutrition"].sum() * 100) / tableau["Population mondial"].sum() ))
+                        tableau["moyenne total"] = tableau["moyenne total"].round(1)
+                        tableau
+                                                                      
+                    </pre>
+                    <h4>Résultat de la Question 1</h4>
+                    <pre>
+                        <div>
+                            <table border="1" class="dataframe">
+                              <thead>
+                                <tr style="text-align: right;">
+                                  <th></th>
+                                  <th>Zone</th>
+                                  <th>Année</th>
+                                  <th>Population en sous nutrition</th>
+                                  <th>Population mondial</th>
+                                  <th>moyenne</th>
+                                  <th>moyenne total</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <th>0</th>
+                                  <td>Afghanistan</td>
+                                  <td>2017</td>
+                                  <td>10500000.0</td>
+                                  <td>36296113.0</td>
+                                  <td>28.9</td>
+                                  <td>7.1</td>
+                                </tr>
+                                <tr>
+                                  <th>1</th>
+                                  <td>Afrique du Sud</td>
+                                  <td>2017</td>
+                                  <td>3100000.0</td>
+                                  <td>57009756.0</td>
+                                  <td>5.4</td>
+                                  <td>7.1</td>
+                                </tr>
+                                <tr>
+                                  <th>2</th>
+                                  <td>Albanie</td>
+                                  <td>2017</td>
+                                  <td>100000.0</td>
+                                  <td>2884169.0</td>
+                                  <td>3.5</td>
+                                  <td>7.1</td>
+                                </tr>
+                                <tr>
+                                  <th>3</th>
+                                  <td>Algérie</td>
+                                  <td>2017</td>
+                                  <td>1300000.0</td>
+                                  <td>41389189.0</td>
+                                  <td>3.1</td>
+                                  <td>7.1</td>
+                                </tr>
+                                <tr>
+                                  <th>4</th>
+                                  <td>Allemagne</td>
+                                  <td>2017</td>
+                                  <td>0.0</td>
+                                  <td>82658409.0</td>
+                                  <td>0.0</td>
+                                  <td>7.1</td>
+                                </tr>
+                                <tr>
+                                  <th>...</th>
+                                  <td>...</td>
+                                  <td>...</td>
+                                  <td>...</td>
+                                  <td>...</td>
+                                  <td>...</td>
+                                  <td>...</td>
+                                </tr>
+                                <tr>
+                                  <th>198</th>
+                                  <td>Venezuela (République bolivarienne du)</td>
+                                  <td>2017</td>
+                                  <td>8000000.0</td>
+                                  <td>29402484.0</td>
+                                  <td>27.2</td>
+                                  <td>7.1</td>
+                                </tr>
+                                <tr>
+                                  <th>199</th>
+                                  <td>Viet Nam</td>
+                                  <td>2017</td>
+                                  <td>6500000.0</td>
+                                  <td>94600648.0</td>
+                                  <td>6.9</td>
+                                  <td>7.1</td>
+                                </tr>
+                                <tr>
+                                  <th>200</th>
+                                  <td>Yémen</td>
+                                  <td>2017</td>
+                                  <td>0.0</td>
+                                  <td>27834819.0</td>
+                                  <td>0.0</td>
+                                  <td>7.1</td>
+                                </tr>
+                                <tr>
+                                  <th>201</th>
+                                  <td>Zambie</td>
+                                  <td>2017</td>
+                                  <td>0.0</td>
+                                  <td>16853599.0</td>
+                                  <td>0.0</td>
+                                  <td>7.1</td>
+                                </tr>
+                                <tr>
+                                  <th>202</th>
+                                  <td>Zimbabwe</td>
+                                  <td>2017</td>
+                                  <td>0.0</td>
+                                  <td>14236595.0</td>
+                                  <td>0.0</td>
+                                  <td>7.1</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <p>La proportion des personnes en état de sous nitrition dans le monde est de 7.1 %
+                            </p>
+                            </div>
+                    </pre>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="timeline-item">
+                    <h4>Question 2</h4>
+                    <p>2. Calcul du nombre théorique de personnes qui pourraient être nourries à partir de la disponibilité alimentaire mondiale.</p>
+                    <pre>
+                        # Requete 2 : le nombre théorique de personnes qui pourraient être nourries ;
+
+                        # On raseemble la dispo ali et la population année 2017 
+                        dispo_ali_pop = dispo_ali.merge(popu.loc[popu['Année'] == 2017, ["Zone", "Population"]], on= 'Zone')
+                        # On calcul la dispo total en miltipliant par le nbrs d'habitant et par le nbrs de jour pour 1 an 
+                        dispo_ali_pop['dispo_kcal'] = dispo_ali_pop['Disponibilité alimentaire (Kcal/personne/jour)'] * dispo_ali_pop['Population'] * 365 
+                        print("dispo alimentaire total en kcal est de: ", dispo_ali_pop['dispo_kcal'].sum(), "kcal")
+                        # On calcul la moyenne des kcal qu'a besoin un être humain
+                        moy = (2700 + 1800) /2
+                        # on fait la sommes que l'on divise par la moyenne * 365 jour pour 1 an 
+                        total_humain_kcal = round(dispo_ali_pop['dispo_kcal'].sum()/(moy * 365))
+                        print("Le total d'être humain pouvant être nourris est de: ", total_humain_kcal, "être humain ")
+                        
+                        print("Proportion :", "{:.2f}".format(total_humain_kcal*100/popu.loc[popu['Année'] == 2017,"Population"].sum()), "%")
+                    </pre>
+                    <h4>Résultat de la Question 2</h4>
+                    <pre>
+                        dispo alimentaire total en kcal est de:  7635429388975.814 kcal
+                        Le total d'être humain pouvant être nourris est de:  9297327 être humain 
+                        Proportion : 123.17 %                        
+                    </pre>
+                        
+                        
+                        
+                </div>
+
+                <!-- Question 3 -->
+                <div class="timeline-item">
+                    <h4>Question 3</h4>
+                    <p>3. Évaluation de la disponibilité alimentaire des produits végétaux pour 2017.</p>
+                    <pre>
+                        # Requete 3: a disponibilité alimentaire des produits végétaux ;
+
+                        # On selectionne la dispo ali uniquement de végétaux 
+                        dispo_ali_vege = dispo_ali[(dispo_ali['Origine'] == "vegetale") & (dispo_ali['Disponibilité alimentaire (Kcal/personne/jour)'])]
+                        # On la fusionne avec l'année 2017 de population et on effectue le même calcul que précédent 
+                        dispo_ali_pop_vege = dispo_ali_vege.merge(popu.loc[popu['Année'] == 2017, ["Zone", "Population"]], on= 'Zone')
+                        dispo_ali_pop_vege['dispo_kcal'] = dispo_ali_pop_vege['Disponibilité alimentaire (Kcal/personne/jour)'] * dispo_ali_pop_vege['Population'] * 365 
+                        print("dispo alimentaire végétal total en kcal est de: ", dispo_ali_pop_vege['dispo_kcal'].sum(), "kcal")
+                        
+                        moy = (2700 + 1800) /2
+                        
+                        total_humain_kcal_vege = round(dispo_ali_pop_vege['dispo_kcal'].sum()/(moy * 365))
+                        print("Le total d'être humain pouvant être nourris est de: ", total_humain_kcal_vege, "être humain ")
+                        print("Proportion :", "{:.2f}".format(total_humain_kcal_vege*100/popu.loc[popu['Année'] == 2017,"Population"].sum()), "%")                      
+                        </pre>
+                    <h4>Résultat de la Question 3</h4>
+                    <pre>
+                        dispo alimentaire végétal total en kcal est de:  6300178937197.865 kcal
+                        Le total d'être humain pouvant être nourris est de:  7671451 être humain 
+                        Proportion : 101.63 %                        
+                        </pre>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="timeline-item">
+                    <h4>Question 4</h4>
+                    <p>4. Analyse de l'utilisation de la disponibilité intérieure, en particulier en distinguant la part attribuée à l'alimentation animale, les pertes et l'utilisation pour l'alimentation humaine.</p>
+                    <pre>
+                        # requete 4 : l’utilisation de la disponibilité intérieure ; 
+
+                        # On fait appelle a toutes les sommes des variables que l'on aura besoin 
+                        animal = dispo_ali['Aliments pour animaux'].sum()
+                        perte = dispo_ali['Pertes'].sum()
+                        ali_humaine = dispo_ali['Nourriture'].sum()
+                        dispo_int = dispo_ali['Disponibilité intérieure'].sum()
+                        
+                        # On calcul la part de la dispo alimentaire pour animaux 
+                        dispo_int_animal = (animal * 100) / dispo_int
+                        print('La part de la disponibilité intérieur utilisé pour les animaux est de : ', dispo_int_animal,'%') 
+                        print()
+                        # On calcul la part de la dispo alimentaire pour les pertes 
+                        dispo_int_perdue = (perte * 100) / dispo_int 
+                        print('La part de la disponibilité intérieur perdue est de : ', dispo_int_perdue,'%')
+                        print()
+                        # On calcul la part de la dispo alimentaire pour la nourriture 
+                        dispo_int_nourriture = (ali_humaine * 100) / dispo_int
+                        print("La part de la disponibilité intérieur utilisé pour l'alimentation humaine  est de : ", dispo_int_nourriture,'%')
+                    </pre>
+                    <h4>Résultat de la Question 4</h4>
+                    <pre>
+                        La part de la disponibilité intérieur utilisé pour les animaux est de :  13.242418464261426 %
+                        La part de la disponibilité intérieur perdue est de :  4.606541541196999 %                        
+                        La part de la disponibilité intérieur utilisé pour l'alimentation humaine  est de :  49.51021393657058 %
+                    </pre>
+                </div>
+
+                <h3>Les demandes de Mélanie : </h3><br>
+                <div class="timeline-item">
+                    <h4>Mise en place de l'environement de travail</h4>
+                    <pre>
+                        import pandas as pd
+                        import numpy as np 
+                        
+                        # nous ouvrons tous nos dossiers et les renommons pour plus de clarté 
+                        sous_nutri= pd.read_csv("sous_nutrition.csv")
+                        dispo_ali= pd.read_csv("dispo_alimentaire.csv")
+                        popu= pd.read_csv("population.csv")
+                        aide_ali= pd.read_csv("aide_alimentaire.csv")
+                        
+                    </pre>
+                </div>
+
+                <!-- Question 1 -->
+                <div class="timeline-item">
+                    <h4>Question 1</h4>
+                    <p>1. Réalisation d'une étude détaillée pour chaque pays, mettant en évidence les pays ayant la proportion la plus élevée de personnes sous-alimentées en 2017.</p>
+                    <pre>
+                        # Requete 1: es pays pour lesquels la proportion de personnes sous-alimentées est la plus forte en 2017,;
+
+                        # nous selectionnons les valeurs de l'Année 2017 en prenant l'intervalle 2016-2018
+                        sous_nutri_2017 = sous_nutri.loc[sous_nutri["Année"] == '2016-2018'] 
+                        sous_nutri_2017 ['Population'] = pd.to_numeric(sous_nutri_2017 ['Population'], errors='coerce')
+                        sous_nutri_2017 .fillna(0, inplace=True)
+                        
+                        # nous créons une variable b correspondant à la population mondial en 2017
+                        popu_2017 = popu.loc[popu["Année"]== 2017]
+                        
+                        # on fusionne nous deux dataframe en une en fusionnant les zones
+                        tableau = pd.merge(sous_nutri_2017 ,popu_2017, on = ["Zone"])
+                        
+                        # on supprime les colonnes inutiles 
+                        del tableau["Année_x"]
+                        
+                        # on réorganise les zone et les renommons 
+                        tableau = tableau[["Zone","Année_y","Population_x","Population_y"]]
+                        tableau.columns = ["Zone","Année","Population en sous nutrition", "Population mondial"]
+                        
+                        # on réajuste les colonnes au même grandeur
+                        tableau["Population en sous nutrition"] = tableau["Population en sous nutrition"] * 1000000
+                        tableau["Population mondial"] = tableau["Population mondial"] * 1000
+                        
+                        # on crée une nouvelle colonne moyenne en faisant le pourcentage de sous nutrition par zone et on arrondi à 1
+                        tableau.insert(4, "moyenne", ((tableau["Population en sous nutrition"]*100) / tableau["Population mondial"]))
+                        tableau["moyenne"] = tableau["moyenne"].round(1)
+                        
+                        # On trie les données par les pays ayant le plus fort taux de sous-nutrition
+                        top_10_pays_sous_alimentes = tableau.sort_values(by='moyenne', ascending=False).head(10)
+                        
+                        # Réinitialisation de l'index pour avoir un index de 1 à 10
+                        top_10_pays_sous_alimentes.reset_index(drop=True, inplace=True)
+                        top_10_pays_sous_alimentes.index += 1  # Ajout de 1 à l'index pour qu'il commence à 1
+                        
+                        
+                        # Affichage du résultat
+                        top_10_pays_sous_alimentes
+                        
+                    </pre>
+                    <h4>Résultat de la Question 1</h4>
+                    <pre>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>Zone</th>
+                                <th>Année</th>
+                                <th>Population en sous nutrition</th>
+                                <th>Population mondial</th>
+                                <th>moyenne</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>1</th>
+                                <td>Haïti</td>
+                                <td>2017</td>
+                                <td>5300000.0</td>
+                                <td>10982366.0</td>
+                                <td>48.3</td>
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <td>République populaire démocratique de Corée</td>
+                                <td>2017</td>
+                                <td>12000000.0</td>
+                                <td>25429825.0</td>
+                                <td>47.2</td>
+                            </tr>
+                            <tr>
+                                <th>3</th>
+                                <td>Madagascar</td>
+                                <td>2017</td>
+                                <td>10500000.0</td>
+                                <td>25570512.0</td>
+                                <td>41.1</td>
+                            </tr>
+                            <tr>
+                                <th>4</th>
+                                <td>Libéria</td>
+                                <td>2017</td>
+                                <td>1800000.0</td>
+                                <td>4702226.0</td>
+                                <td>38.3</td>
+                            </tr>
+                            <tr>
+                                <th>5</th>
+                                <td>Lesotho</td>
+                                <td>2017</td>
+                                <td>800000.0</td>
+                                <td>2091534.0</td>
+                                <td>38.2</td>
+                            </tr>
+                            <tr>
+                                <th>6</th>
+                                <td>Tchad</td>
+                                <td>2017</td>
+                                <td>5700000.0</td>
+                                <td>15016753.0</td>
+                                <td>38.0</td>
+                            </tr>
+                            <tr>
+                                <th>7</th>
+                                <td>Rwanda</td>
+                                <td>2017</td>
+                                <td>4200000.0</td>
+                                <td>11980961.0</td>
+                                <td>35.1</td>
+                            </tr>
+                            <tr>
+                                <th>8</th>
+                                <td>Mozambique</td>
+                                <td>2017</td>
+                                <td>9400000.0</td>
+                                <td>28649018.0</td>
+                                <td>32.8</td>
+                            </tr>
+                            <tr>
+                                <th>9</th>
+                                <td>Timor-Leste</td>
+                                <td>2017</td>
+                                <td>400000.0</td>
+                                <td>1243258.0</td>
+                                <td>32.2</td>
+                            </tr>
+                            <tr>
+                                <th>10</th>
+                                <td>Afghanistan</td>
+                                <td>2017</td>
+                                <td>10500000.0</td>
+                                <td>36296113.0</td>
+                                <td>28.9</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </pre>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="timeline-item">
+                    <h4>Question 2</h4>
+                    <p>2. Identification des pays qui ont bénéficié le plus de l'aide depuis 2013.</p>
+                    <pre>
+                        # Requete 2: Pays ayant bénéficié du plus d’aide depuis 2013;
+
+                        aide= aide_ali[['Pays bénéficiaire',"Quantité d'aide(T)"]].groupby("Pays bénéficiaire").sum()
+                        aide.sort_values(by = "Quantité d'aide(T)",ascending= False).head(10)                    </pre>
+                    <h4>Résultat de la Question 2</h4>
+                    <pre>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>Quantité d'aide(T)</th>
+                            </tr>
+                            <tr>
+                                <th>Pays bénéficiaire</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>République arabe syrienne</th>
+                                <td>1858943</td>
+                            </tr>
+                            <tr>
+                                <th>Éthiopie</th>
+                                <td>1381294</td>
+                            </tr>
+                            <tr>
+                                <th>Yémen</th>
+                                <td>1206484</td>
+                            </tr>
+                            <tr>
+                                <th>Soudan du Sud</th>
+                                <td>695248</td>
+                            </tr>
+                            <tr>
+                                <th>Soudan</th>
+                                <td>669784</td>
+                            </tr>
+                            <tr>
+                                <th>Kenya</th>
+                                <td>552836</td>
+                            </tr>
+                            <tr>
+                                <th>Bangladesh</th>
+                                <td>348188</td>
+                            </tr>
+                            <tr>
+                                <th>Somalie</th>
+                                <td>292678</td>
+                            </tr>
+                            <tr>
+                                <th>République démocratique du Congo</th>
+                                <td>288502</td>
+                            </tr>
+                            <tr>
+                                <th>Niger</th>
+                                <td>276344</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </pre>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="timeline-item">
+                    <h4>Question 3</h4>
+                    <p>3. Analyse des pays ayant la plus grande et la plus faible disponibilité alimentaire par habitant.</p>
+                    <pre>
+                        # requete 3: le plus/le moins de disponibilité/habitant;
+
+                        dispo_pays_total = dispo_ali[['Zone','Produit','Disponibilité alimentaire (Kcal/personne/jour)']].groupby('Zone').sum()
+                        dispo_pays_total.sort_values(by="Disponibilité alimentaire (Kcal/personne/jour)", ascending= False).head(10)                    </pre>
+                    <h4>Résultat de la Question 3</h4>
+                    <pre>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>Disponibilité alimentaire (Kcal/personne/jour)</th>
+                            </tr>
+                            <tr>
+                                <th>Zone</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Autriche</th>
+                                <td>3770.0</td>
+                            </tr>
+                            <tr>
+                                <th>Belgique</th>
+                                <td>3737.0</td>
+                            </tr>
+                            <tr>
+                                <th>Turquie</th>
+                                <td>3708.0</td>
+                            </tr>
+                            <tr>
+                                <th>États-Unis d'Amérique</th>
+                                <td>3682.0</td>
+                            </tr>
+                            <tr>
+                                <th>Israël</th>
+                                <td>3610.0</td>
+                            </tr>
+                            <tr>
+                                <th>Irlande</th>
+                                <td>3602.0</td>
+                            </tr>
+                            <tr>
+                                <th>Italie</th>
+                                <td>3578.0</td>
+                            </tr>
+                            <tr>
+                                <th>Luxembourg</th>
+                                <td>3540.0</td>
+                            </tr>
+                            <tr>
+                                <th>Égypte</th>
+                                <td>3518.0</td>
+                            </tr>
+                            <tr>
+                                <th>Allemagne</th>
+                                <td>3503.0</td>
+                            </tr>
+                            </tbody>
+                        </table>                      
+                    </pre>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="timeline-item">
+                    <h4>Question 4</h4>
+                    <p>4. Toutes autres informations pertinentes permettant de mettre en évidence les pays confrontés à des difficultés alimentaires.</p>
+                    <pre>
+                        dispo_pays_total = dispo_ali[['Zone','Produit','Disponibilité alimentaire (Kcal/personne/jour)']].groupby('Zone').sum()
+                        dispo_pays_total.sort_values(by="Disponibilité alimentaire (Kcal/personne/jour)").head(10)
+                    </pre>
+                    <h4>Résultat de la Question 4</h4>
+                    <pre>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>Disponibilité alimentaire (Kcal/personne/jour)</th>
+                            </tr>
+                            <tr>
+                                <th>Zone</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>République centrafricaine</th>
+                                <td>1879.0</td>
+                            </tr>
+                            <tr>
+                                <th>Zambie</th>
+                                <td>1924.0</td>
+                            </tr>
+                            <tr>
+                                <th>Madagascar</th>
+                                <td>2056.0</td>
+                            </tr>
+                            <tr>
+                                <th>Afghanistan</th>
+                                <td>2087.0</td>
+                            </tr>
+                            <tr>
+                                <th>Haïti</th>
+                                <td>2089.0</td>
+                            </tr>
+                            <tr>
+                                <th>République populaire démocratique de Corée</th>
+                                <td>2093.0</td>
+                            </tr>
+                            <tr>
+                                <th>Tchad</th>
+                                <td>2109.0</td>
+                            </tr>
+                            <tr>
+                                <th>Zimbabwe</th>
+                                <td>2113.0</td>
+                            </tr>
+                            <tr>
+                                <th>Ouganda</th>
+                                <td>2126.0</td>
+                            </tr>
+                            <tr>
+                                <th>Timor-Leste</th>
+                                <td>2129.0</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer-area section-gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h4>À propos de cette page</h4>
+                    <p>Ce site a été créé pour présenter mes compétences en data analyst et mes projets en tant qu'entrepreneur. N'hésitez pas à me contacter pour toute opportunité de collaboration.</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h4>Contact</h4>
+                    <p>Email : corentin.bessone@hotmail.fr</p>
+                    <p>Téléphone : (+33) 7-67-78-54-91 / (+61) 481-873-678</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="js/FAQ.js"></script>
+<script src="js/projet.js"></script>
+</body>
+</html>
