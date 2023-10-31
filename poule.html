@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="img/fav.png">
+    <meta name="author" content="Corentin BESSONE">
+    <meta name="description" content="Corentin BESSONE - Data Analyst">
+    <meta name="keywords" content="data analyst, portfolio, personal website">
+    <title>Corentin BESSONE - Data Analyst</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/linearicons.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/project.css">
+</head>
+
+<body>
+    <header id="header">
+        <div class="container main-menu">
+            <div class="row align-items-center justify-content-between d-flex">
+                <div class id="logo">
+                    <a href="/"><h3>Corentin Bessone</h3></a>
+                </div>
+                <nav id="nav-menu-container">
+                    <ul class="nav-menu">
+                        <li><a href="/">Accueil</a></li>
+                        <li><a href="about.html">À propos</a></li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+<!-- Banner -->
+<section class="about-banner">
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="about-content col-lg-12">
+                <h1 class="text-white">
+                    La Poule qui Chante
+                </h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="home-about">
+    <div class="container">
+            <!-- Personal Details -->
+            <div class="contexte">
+                <h1 class="text-uppercase">Etude de marché pour produit avicoles. </h1><br>
+                <p>Chez La Poule qui Chante, entreprise agroalimentaire française, nous envisageons une expansion à l'international. Mon manager, Patrick, m'a confié une mission d'analyse pour identifier les groupes de pays favorables à l'exportation de nos produits avicoles.</p>
+                <p>Je bénéficie d'une grande autonomie pour choisir les données à analyser, que ce soit à partir des données de la FAO ou d'autres sources open data, pour utiliser des méthodes d'analyse comme la classification ascendante hiérarchique et les k-means.</p>
+                <div class="bouton"><a href="#projet" class="primary-btn text-uppercase">Découvrez le code</a></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Timeline Section -->
+<section class="timeline pt-80 pb-80" id="project">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Dans le cadre de ce projet, j'ai utilisé Python</h2><br>
+
+                <div class="timeline-item">
+                    <h4>Mise en place de l'environement de travail et vérification des données</h4>
+                    <pre>
+                        import pandas as pd
+                        import numpy as np 
+                        import matplotlib.pyplot as plt
+                        import seaborn as sns 
+                        from sklearn.metrics import davies_bouldin_score
+                        from sklearn.cluster import KMeans
+                        import statsmodels.api as sm
+                        from scipy.cluster.hierarchy import dendrogram, linkage, fcluster 
+                        import scipy.cluster.hierarchy as sch
+                        from sklearn import metrics
+                        from sklearn import decomposition
+                        from sklearn import preprocessing
+                        from functions import *
+                        pop = pd.read_csv("Population_2000_2018.csv")
+                        dispo_ali = pd.read_csv("DisponibiliteAlimentaire_2017.csv")
+                        # on vérifie les données;
+                        pop.describe()
+                    </pre>
+                    <h4>Output : </h4>
+                    <pre>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>Code zone</th>
+                                <th>Code Élément</th>
+                                <th>Code Produit</th>
+                                <th>Code année</th>
+                                <th>Année</th>
+                                <th>Valeur</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>count</th>
+                                <td>4411.000000</td>
+                                <td>4411.0</td>
+                                <td>4411.0</td>
+                                <td>4411.000000</td>
+                                <td>4411.000000</td>
+                                <td>4.411000e+03</td>
+                            </tr>
+                            <tr>
+                                <th>mean</th>
+                                <td>132.202902</td>
+                                <td>511.0</td>
+                                <td>3010.0</td>
+                                <td>2009.068238</td>
+                                <td>2009.068238</td>
+                                <td>2.963004e+04</td>
+                            </tr>
+                            <tr>
+                                <th>std</th>
+                                <td>75.854840</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                                <td>5.481539</td>
+                                <td>5.481539</td>
+                                <td>1.238029e+05</td>
+                            </tr>
+                            <tr>
+                                <th>min</th>
+                                <td>1.000000</td>
+                                <td>511.0</td>
+                                <td>3010.0</td>
+                                <td>2000.000000</td>
+                                <td>2000.000000</td>
+                                <td>7.850000e-01</td>
+                            </tr>
+                            <tr>
+                                <th>25%</th>
+                                <td>68.000000</td>
+                                <td>511.0</td>
+                                <td>3010.0</td>
+                                <td>2004.000000</td>
+                                <td>2004.000000</td>
+                                <td>3.921890e+02</td>
+                            </tr>
+                            <tr>
+                                <th>50%</th>
+                                <td>132.000000</td>
+                                <td>511.0</td>
+                                <td>3010.0</td>
+                                <td>2009.000000</td>
+                                <td>2009.000000</td>
+                                <td>4.764741e+03</td>
+                            </tr>
+                            <tr>
+                                <th>75%</th>
+                                <td>195.000000</td>
+                                <td>511.0</td>
+                                <td>3010.0</td>
+                                <td>2014.000000</td>
+                                <td>2014.000000</td>
+                                <td>1.821548e+04</td>
+                            </tr>
+                            <tr>
+                                <th>max</th>
+                                <td>299.000000</td>
+                                <td>511.0</td>
+                                <td>3010.0</td>
+                                <td>2018.000000</td>
+                                <td>2018.000000</td>
+                                <td>1.427648e+06</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </pre>
+
+                </div>
+
+                <!-- Question 1 -->
+                <div class="timeline-item">
+                    <h3>le nettoyage et l’analyse exploratoire des données</h3><br>
+                    <pre>
+                        pop.isnull().sum()
+                        dispo_ali.describe()
+                        dispo_ali.isnull().sum()
+                    </pre>
+                    <h4>Output :</h4>
+                    <pre>
+                        <p>pop :</p>
+                        Code Domaine                 0
+                        Domaine                      0
+                        Code zone                    0
+                        Zone                         0
+                        Code Élément                 0
+                        Élément                      0
+                        Code Produit                 0
+                        Produit                      0
+                        Code année                   0
+                        Année                        0
+                        Unité                        0
+                        Valeur                       0
+                        Symbole                      0
+                        Description du Symbole       0
+                        Note                      4153
+                        dtype: int64
+
+                        <p>dispo_ali :</p>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>Code zone</th>
+                                <th>Code Élément</th>
+                                <th>Code Produit</th>
+                                <th>Code année</th>
+                                <th>Année</th>
+                                <th>Valeur</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>count</th>
+                                <td>176600.000000</td>
+                                <td>176600.000000</td>
+                                <td>176600.000000</td>
+                                <td>176600.0</td>
+                                <td>176600.0</td>
+                                <td>176600.000000</td>
+                            </tr>
+                            <tr>
+                                <th>mean</th>
+                                <td>125.474740</td>
+                                <td>3810.052894</td>
+                                <td>2628.778545</td>
+                                <td>2017.0</td>
+                                <td>2017.0</td>
+                                <td>210.554918</td>
+                            </tr>
+                            <tr>
+                                <th>std</th>
+                                <td>72.941699</td>
+                                <td>2211.790089</td>
+                                <td>91.993247</td>
+                                <td>0.0</td>
+                                <td>0.0</td>
+                                <td>4762.047787</td>
+                            </tr>
+                            <tr>
+                                <th>min</th>
+                                <td>1.000000</td>
+                                <td>645.000000</td>
+                                <td>2511.000000</td>
+                                <td>2017.0</td>
+                                <td>2017.0</td>
+                                <td>-10388.000000</td>
+                            </tr>
+                            <tr>
+                                <th>25%</th>
+                                <td>63.000000</td>
+                                <td>684.000000</td>
+                                <td>2556.000000</td>
+                                <td>2017.0</td>
+                                <td>2017.0</td>
+                                <td>0.000000</td>
+                            </tr>
+                            <tr>
+                                <th>50%</th>
+                                <td>120.000000</td>
+                                <td>5142.000000</td>
+                                <td>2612.000000</td>
+                                <td>2017.0</td>
+                                <td>2017.0</td>
+                                <td>0.120000</td>
+                            </tr>
+                            <tr>
+                                <th>75%</th>
+                                <td>188.000000</td>
+                                <td>5301.000000</td>
+                                <td>2732.000000</td>
+                                <td>2017.0</td>
+                                <td>2017.0</td>
+                                <td>8.462500</td>
+                            </tr>
+                            <tr>
+                                <th>max</th>
+                                <td>276.000000</td>
+                                <td>5911.000000</td>
+                                <td>2899.000000</td>
+                                <td>2017.0</td>
+                                <td>2017.0</td>
+                                <td>758548.000000</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <p>isnull :</p>
+                        Code Domaine              0
+                        Domaine                   0
+                        Code zone                 0
+                        Zone                      0
+                        Code Élément              0
+                        Élément                   0
+                        Code Produit              0
+                        Produit                   0
+                        Code année                0
+                        Année                     0
+                        Unité                     0
+                        Valeur                    0
+                        Symbole                   0
+                        Description du Symbole    0
+                        dtype: int64
+                    </pre><br>
+
+
+                    <h3>Nettoyage des données interessantes :</h3>
+                    <pre>
+                        dispo_ali = dispo_ali[["Zone","Code zone", "Élément","Code Élément", "Produit","Code Produit", "Année", "Unité","Valeur"]]
+                        pop = pop[["Zone","Code zone", "Produit", "Année", "Valeur" ]]
+                        # on créer notre fusion
+                        tableau = pd.merge(dispo_ali, pop, on= ["Année", "Code zone"])
+                    </pre>
+                    <h4>Output :</h4>
+                    <pre>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>Zone_x</th>
+                                <th>Code zone</th>
+                                <th>Élément</th>
+                                <th>Code Élément</th>
+                                <th>Produit_x</th>
+                                <th>Code Produit</th>
+                                <th>Année</th>
+                                <th>Unité</th>
+                                <th>Valeur_x</th>
+                                <th>Zone_y</th>
+                                <th>Produit_y</th>
+                                <th>Valeur_y</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>0</th>
+                                <td>Afghanistan</td>
+                                <td>2</td>
+                                <td>Production</td>
+                                <td>5511</td>
+                                <td>Blé et produits</td>
+                                <td>2511</td>
+                                <td>2017</td>
+                                <td>Milliers de tonnes</td>
+                                <td>4281.0</td>
+                                <td>Afghanistan</td>
+                                <td>Population-Estimations</td>
+                                <td>36296.113</td>
+                            </tr>
+                            <tr>
+                                <th>1</th>
+                                <td>Afghanistan</td>
+                                <td>2</td>
+                                <td>Importations - Quantité</td>
+                                <td>5611</td>
+                                <td>Blé et produits</td>
+                                <td>2511</td>
+                                <td>2017</td>
+                                <td>Milliers de tonnes</td>
+                                <td>2302.0</td>
+                                <td>Afghanistan</td>
+                                <td>Population-Estimations</td>
+                                <td>36296.113</td>
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <td>Afghanistan</td>
+                                <td>2</td>
+                                <td>Variation de stock</td>
+                                <td>5072</td>
+                                <td>Blé et produits</td>
+                                <td>2511</td>
+                                <td>2017</td>
+                                <td>Milliers de tonnes</td>
+                                <td>-119.0</td>
+                                <td>Afghanistan</td>
+                                <td>Population-Estimations</td>
+                                <td>36296.113</td>
+                            </tr>
+                            <tr>
+                                <th>3</th>
+                                <td>Afghanistan</td>
+                                <td>2</td>
+                                <td>Exportations - Quantité</td>
+                                <td>5911</td>
+                                <td>Blé et produits</td>
+                                <td>2511</td>
+                                <td>2017</td>
+                                <td>Milliers de tonnes</td>
+                                <td>0.0</td>
+                                <td>Afghanistan</td>
+                                <td>Population-Estimations</td>
+                                <td>36296.113</td>
+                            </tr>
+                            <tr>
+                                <th>4</th>
+                                <td>Afghanistan</td>
+                                <td>2</td>
+                                <td>Disponibilité intérieure</td>
+                                <td>5301</td>
+                                <td>Blé et produits</td>
+                                <td>2511</td>
+                                <td>2017</td>
+                                <td>Milliers de tonnes</td>
+                                <td>6701.0</td>
+                                <td>Afghanistan</td>
+                                <td>Population-Estimations</td>
+                                <td>36296.113</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </pre><br>
+
+                    <h3>Suppression des données inutiles :</h3>
+                    <pre>
+                        del tableau["Produit_y"]
+                        del tableau["Zone_y"]
+                        tableau.columns = ["Zone","Code zone", "Elément","Code élément", "Produit","Code produit", "Année", "Unité", "Valeur", "Population"]
+                        # On filtre sur les volailles et on met au bonne unité; 
+                        tableau = tableau[tableau.Produit.eq("Viande de Volailles")]
+                        tableau["Valeur"] = tableau["Valeur"] * 1000
+                        pd.options.display.float_format = '{:20,.2f}'.format
+                        del tableau["Unité"]
+                        # on supprime et renome les données et on index les éléments pour pouvoir garder ceux qui nous interesses; 
+                        data_clus = tableau.drop(columns=["Code élément", "Produit","Code produit", "Année", "Code zone"])
+                        data_clus = data_clus.set_index("Elément")
+                        data_clus = data_clus.drop(["Semences", "Traitement", "Résidus", "Variation de stock", "Aliments pour animaux" , "Alimentation pour touristes", "Autres utilisations (non alimentaire)"])
+                        data_clus
+                    </pre>
+                    <h4>Output :</h4>
+                    <pre>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>Zone</th>
+                                <th>Valeur</th>
+                                <th>Population</th>
+                            </tr>
+                            <tr>
+                                <th>Elément</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Production</th>
+                                <td>Afghanistan</td>
+                                <td>28,000.00</td>
+                                <td>36,296.11</td>
+                            </tr>
+                            <tr>
+                                <th>Importations - Quantité</th>
+                                <td>Afghanistan</td>
+                                <td>29,000.00</td>
+                                <td>36,296.11</td>
+                            </tr>
+                            <tr>
+                                <th>Disponibilité intérieure</th>
+                                <td>Afghanistan</td>
+                                <td>57,000.00</td>
+                                <td>36,296.11</td>
+                            </tr>
+                            <tr>
+                                <th>Pertes</th>
+                                <td>Afghanistan</td>
+                                <td>2,000.00</td>
+                                <td>36,296.11</td>
+                            </tr>
+                            <tr>
+                                <th>Nourriture</th>
+                                <td>Afghanistan</td>
+                                <td>55,000.00</td>
+                                <td>36,296.11</td>
+                            </tr>
+                            <tr>
+                                <th>...</th>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                            <tr>
+                                <th>Nourriture</th>
+                                <td>Zimbabwe</td>
+                                <td>67,000.00</td>
+                                <td>14,236.59</td>
+                            </tr>
+                            <tr>
+                                <th>Disponibilité alimentaire en quantité (kg/personne/an)</th>
+                                <td>Zimbabwe</td>
+                                <td>4,680.00</td>
+                                <td>14,236.59</td>
+                            </tr>
+                            <tr>
+                                <th>Disponibilité alimentaire (Kcal/personne/jour)</th>
+                                <td>Zimbabwe</td>
+                                <td>16,000.00</td>
+                                <td>14,236.59</td>
+                            </tr>
+                            <tr>
+                                <th>Disponibilité de protéines en quantité (g/personne/jour)</th>
+                                <td>Zimbabwe</td>
+                                <td>1,590.00</td>
+                                <td>14,236.59</td>
+                            </tr>
+                            <tr>
+                                <th>Disponibilité de matière grasse en quantité (g/personne/jour)</th>
+                                <td>Zimbabwe</td>
+                                <td>990.00</td>
+                                <td>14,236.59</td>
+                            </tr>
+                            </tbody>
+                        </table>                  
+                    </pre><br>
+
+                    <h4>Création pivot table : </h4>
+                    <pre>
+                        data_clus_pivot = pd.pivot_table(data_clus, index= 'Zone', columns= "Elément", values='Valeur')
+                        data_clus_pivot.columns = ["Dispo_calo", "Dispo_ali_quanti", "Dispo_matiere_grasse", "Dispo_prot", "Dispo_int", "Export", "Import", "Nourriture", "Pertes", "Produc"]
+                        data_clus_pivot = data_clus_pivot[[ "Dispo_int", "Export", "Import", "Nourriture", "Produc"]]
+                        data_clus_pivot = data_clus_pivot.fillna(0)
+                        data_final = data_clus_pivot
+                        data_final
+                    </pre>
+                    <h4>Output :</h4>
+                    <pre>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>Dispo_int</th>
+                                <th>Export</th>
+                                <th>Import</th>
+                                <th>Nourriture</th>
+                                <th>Produc</th>
+                            </tr>
+                            <tr>
+                                <th>Zone</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Afghanistan</th>
+                                <td>57,000.00</td>
+                                <td>0.00</td>
+                                <td>29,000.00</td>
+                                <td>55,000.00</td>
+                                <td>28,000.00</td>
+                            </tr>
+                            <tr>
+                                <th>Afrique du Sud</th>
+                                <td>2,118,000.00</td>
+                                <td>63,000.00</td>
+                                <td>514,000.00</td>
+                                <td>2,035,000.00</td>
+                                <td>1,667,000.00</td>
+                            </tr>
+                            <tr>
+                                <th>Albanie</th>
+                                <td>47,000.00</td>
+                                <td>0.00</td>
+                                <td>38,000.00</td>
+                                <td>47,000.00</td>
+                                <td>13,000.00</td>
+                            </tr>
+                            <tr>
+                                <th>Algérie</th>
+                                <td>277,000.00</td>
+                                <td>0.00</td>
+                                <td>2,000.00</td>
+                                <td>264,000.00</td>
+                                <td>275,000.00</td>
+                            </tr>
+                            <tr>
+                                <th>Allemagne</th>
+                                <td>1,739,000.00</td>
+                                <td>646,000.00</td>
+                                <td>842,000.00</td>
+                                <td>1,609,000.00</td>
+                                <td>1,514,000.00</td>
+                            </tr>
+                            <tr>
+                                <th>...</th>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                            <tr>
+                                <th>Émirats arabes unis</th>
+                                <td>412,000.00</td>
+                                <td>94,000.00</td>
+                                <td>433,000.00</td>
+                                <td>412,000.00</td>
+                                <td>48,000.00</td>
+                            </tr>
+                            <tr>
+                                <th>Équateur</th>
+                                <td>341,000.00</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>324,000.00</td>
+                                <td>340,000.00</td>
+                            </tr>
+                            <tr>
+                                <th>États-Unis d'Amérique</th>
+                                <td>18,266,000.00</td>
+                                <td>3,692,000.00</td>
+                                <td>123,000.00</td>
+                                <td>18,100,000.00</td>
+                                <td>21,914,000.00</td>
+                            </tr>
+                            <tr>
+                                <th>Éthiopie</th>
+                                <td>14,000.00</td>
+                                <td>0.00</td>
+                                <td>1,000.00</td>
+                                <td>14,000.00</td>
+                                <td>14,000.00</td>
+                            </tr>
+                            <tr>
+                                <th>Îles Salomon</th>
+                                <td>3,000.00</td>
+                                <td>0.00</td>
+                                <td>6,000.00</td>
+                                <td>3,000.00</td>
+                                <td>0.00</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </pre><br>
+
+                    <h4>On vérifie la norme de nos données et on normalise si nécessaire :</h4>
+                    <pre>
+                        # on regarde les moyennes et écart type; 
+                        moyenne = data_final.mean(axis= 0)
+                        ecart = data_final.std(axis= 0)
+                        moyenne, ecart
+
+                        # normalisation; 
+
+                        data_norm = (data_final - moyenne)/ecart
+                        data_norm
+
+                        # verif moyenne par colonne = 0 et verif ecart = 1
+                        data_norm.mean(axis=0), data_norm.std(axis=0)
+                    </pre>
+                    <h4>Output :</h4>
+                    <pre>
+                        <h5>Moyennes et écart type :</h5>
+                        (Dispo_int              679,598.84
+                        Export                 103,750.00
+                        Import                  88,488.37
+                        Nourriture             649,406.98
+                        Produc                 708,325.58
+                        dtype: float64,
+                        Dispo_int            2,175,612.99
+                        Export                 458,066.12
+                        Import                 185,824.62
+                        Nourriture           2,125,189.09
+                        Produc               2,474,456.33
+                        dtype: float64)
+
+                        <h5>Normalisation : </h5>
+                        <table border="1" class="dataframe">
+                            <thead>
+                            <tr style="text-align: right;">
+                                <th></th>
+                                <th>Dispo_int</th>
+                                <th>Export</th>
+                                <th>Import</th>
+                                <th>Nourriture</th>
+                                <th>Produc</th>
+                            </tr>
+                            <tr>
+                                <th>Zone</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th>Afghanistan</th>
+                                <td>-0.29</td>
+                                <td>-0.23</td>
+                                <td>-0.32</td>
+                                <td>-0.28</td>
+                                <td>-0.27</td>
+                            </tr>
+                            <tr>
+                                <th>Afrique du Sud</th>
+                                <td>0.66</td>
+                                <td>-0.09</td>
+                                <td>2.29</td>
+                                <td>0.65</td>
+                                <td>0.39</td>
+                            </tr>
+                            <tr>
+                                <th>Albanie</th>
+                                <td>-0.29</td>
+                                <td>-0.23</td>
+                                <td>-0.27</td>
+                                <td>-0.28</td>
+                                <td>-0.28</td>
+                            </tr>
+                            <tr>
+                                <th>Algérie</th>
+                                <td>-0.19</td>
+                                <td>-0.23</td>
+                                <td>-0.47</td>
+                                <td>-0.18</td>
+                                <td>-0.18</td>
+                            </tr>
+                            <tr>
+                                <th>Allemagne</th>
+                                <td>0.49</td>
+                                <td>1.18</td>
+                                <td>4.05</td>
+                                <td>0.45</td>
+                                <td>0.33</td>
+                            </tr>
+                            <tr>
+                                <th>...</th>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                                <td>...</td>
+                            </tr>
+                            <tr>
+                                <th>Émirats arabes unis</th>
+                                <td>-0.12</td>
+                                <td>-0.02</td>
+                                <td>1.85</td>
+                                <td>-0.11</td>
+                                <td>-0.27</td>
+                            </tr>
+                            <tr>
+                                <th>Équateur</th>
+                                <td>-0.16</td>
+                                <td>-0.23</td>
+                                <td>-0.48</td>
+                                <td>-0.15</td>
+                                <td>-0.15</td>
+                            </tr>
+                            <tr>
+                                <th>États-Unis d'Amérique</th>
+                                <td>8.08</td>
+                                <td>7.83</td>
+                                <td>0.19</td>
+                                <td>8.21</td>
+                                <td>8.57</td>
+                            </tr>
+                            <tr>
+                                <th>Éthiopie</th>
+                                <td>-0.31</td>
+                                <td>-0.23</td>
+                                <td>-0.47</td>
+                                <td>-0.30</td>
+                                <td>-0.28</td>
+                            </tr>
+                            <tr>
+                                <th>Îles Salomon</th>
+                                <td>-0.31</td>
+                                <td>-0.23</td>
+                                <td>-0.44</td>
+                                <td>-0.30</td>
+                                <td>-0.29</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <h5>Vérification :</h5>
+                        (Dispo_int                   -0.00
+                        Export                      -0.00
+                        Import                       0.00
+                        Nourriture                   0.00
+                        Produc                      -0.00
+                        dtype: float64,
+                        Dispo_int                    1.00
+                        Export                       1.00
+                        Import                       1.00
+                        Nourriture                   1.00
+                        Produc                       1.00
+                        dtype: float64)
+                    </pre><br>
+
+
+                    <h4>ACP</h4>
+
+                    <pre>
+                        features = data_norm.columns
+                        #centrage et reduction des données;
+                        X_scaled = preprocessing.StandardScaler().fit_transform(data_norm.values)
+                        # Calcul des composantes principales
+                        pca = decomposition.PCA(n_components=5)
+                        X_projected = pca.fit_transform(X_scaled)
+                        # Eboulis des valeurs propres
+                        display_scree_plot(pca)
+                        # Cercle des corrélations
+                        pcs = pca.components_
+                        display_circles(pcs, 5, pca, [(0,1)], labels = np.array(features))
+                        display_factorial_planes(X_projected, 5, pca, [(0,1)])
+                        plt.show()      
+                    </pre>
+
+                    <h4>Output : </h4>
+                    <pre>
+                        <h5>Eboulis des valeurs propre:</h5>
+                        <img src="img/output6.png" alt=""> <br>
+                        <h5>Cercle de corrélation :</h5>
+                        <img src="img/output7.png" alt="" width="500" height="500"><br>
+                        <h5>Projection des individus :</h5>
+                        <img src="img/output8.png" alt=""><br>
+                    </pre><br>
+                    <p>Nous voyons ici que les variables Dispo interieur, production et nourriture sont fortement corrélée à F1 et que Ratio import et import eux sont corrélée à F2.
+                        Nous pouvons donc classer F1 comme étant la production 
+                        Et F2 comme etant les besoin extérieur du pays. 
+                    </p>
+                    
+                        <h4>Matrice des liens :</h4>
+
+                        <pre>
+                            #générer la matrice des liens 
+                            Z = linkage(data_norm,method='ward') 
+                            plt.figure(figsize=(40,12))
+                            plt.title("CAH") 
+                            dendrogram(Z,labels=data_norm.index,color_threshold=5)
+                            plt.show()
+                            #découpage à la hauteur t = 7 ==> identifiants de 4 groupes obtenus
+                            groupes_cah = fcluster(Z,t=10,criterion='distance')
+                            #affichage des observations et leurs groupes
+                            import numpy as np
+                            idg = np.argsort(groupes_cah)
+                            classe = pd.DataFrame(data_norm.index[idg],groupes_cah[idg]).reset_index()
+                            data_final.reset_index()
+                            classe = pd.merge(data_final, classe, on = "Zone" )
+                            classe.groupby(["index"]).mean()     
+                        </pre>
+    
+                        <h4>Output : </h4>
+                        <pre>
+                            <h5>CAH :</h5>
+                            <img src="img/output10.png" alt="" width="1000" height="400"> <br>
+                            <table border="1" class="dataframe">
+                                <thead>
+                                <tr style="text-align: right;">
+                                    <th></th>
+                                    <th>Dispo_int</th>
+                                    <th>Export</th>
+                                    <th>Import</th>
+                                    <th>Nourriture</th>
+                                    <th>Produc</th>
+                                </tr>
+                                <tr>
+                                    <th>index</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>1</th>
+                                    <td>15,469,666.67</td>
+                                    <td>2,830,333.33</td>
+                                    <td>192,666.67</td>
+                                    <td>15,200,000.00</td>
+                                    <td>18,117,000.00</td>
+                                </tr>
+                                <tr>
+                                    <th>2</th>
+                                    <td>1,813,428.57</td>
+                                    <td>445,000.00</td>
+                                    <td>842,714.29</td>
+                                    <td>1,761,285.71</td>
+                                    <td>1,504,571.43</td>
+                                </tr>
+                                <tr>
+                                    <th>3</th>
+                                    <td>356,716.05</td>
+                                    <td>38,512.35</td>
+                                    <td>53,969.14</td>
+                                    <td>331,907.41</td>
+                                    <td>351,537.04</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </pre><br>
+                        <p>
+                            Nous voyons donc ici par l'utilisation d'une classification hierarchique les differents pays qui ont pu resortir.
+                            Ici nous voyons ici une découpe en 3 classes que l'on peut interpreter comme étant:  
+                            La première classe les pays les plus producteur et exportateur ( peut être moins interessant pour nous)
+                            La seconde classe les pays les importateur ( avec une forte demande de nourriture, peut être les pays a garder.)
+                            La troisièmes classe les pays ou les données sont moins forte peut etre plus petit pays et ou moins interessant pour nôtre étude. 
+                        </p>
+
+                        <h4>Méthode de clustering avec les kmeans :</h4>
+
+                        <pre>
+                            # Méthode Elbow 
+                            cost =[] 
+                            for i in range(1, 11): 
+                                KM = KMeans(n_clusters = i, max_iter = 500) 
+                                KM.fit(data_norm) 
+                                cost.append(KM.inertia_)      
+                            plt.plot(range(1, 11), cost, color ='g', linewidth ='3',marker="x") 
+                            plt.xlabel("Value of K") 
+                            plt.show() 
+
+                            kmeans = KMeans(n_clusters= 3)
+                            kmeans.fit(data_norm.values)
+                            data_norm["Clusters"] = kmeans.labels_
+                            plt.scatter(X_projected[:, 0], X_projected[:, 1], c=data_norm["Clusters"], cmap = 'jet')
+                            plt.title("Projections des individus par clusters")
+                            plt.show()
+
+                            # Affichage des positions des centres de classes
+                            plt.figure()
+                            centroids = kmeans.cluster_centers_
+                            centroids_projected = pca.transform(centroids)
+                            plt.scatter(centroids_projected[:,0],centroids_projected[:,1])
+                            plt.show()
+
+                            # Normalisation et groupe par les clusters 
+                            f = data_norm.groupby(["Clusters"]).mean()
+                            plt.figure(figsize=(10,7))
+                            sns.heatmap(f, annot = True)
+                            plt.title("Tableau de corrélation des clusters de la méthodes des kmeans")
+                            plt.show()
+                        </pre>
+    
+                        <h4>Output : </h4>
+                        <pre>
+                            <h5>Elbow :</h5>
+                            <img src="img/elbow.png" alt="" > <br>
+                            <h5>Projection des individus :</h5>
+                            <img src="img/projec.png" alt="" > <br>
+                            <h5>Position des centres de classes :</h5>
+                            <img src="img/classe.png" alt="" > <br>
+                            <h5>Tableau des corrélations : </h5>
+                            <img src="img/cluster.png" alt="" > <br>
+                        </pre><br>
+                        <p>
+                            Nous pouvons voir ici que se serait dans le cluster 1 que se trouverait les données les plus corrélée. Néanmois dans notre analyse, l'import de marchandise serait la donnée qui serait la plus suceptible d'être utiliser. 
+                            Nous allons donc nous concentrer sur le Clusters 2 qui semblerait répertorier les pays les plus corrélés avec l'import de marchandises. 
+                        </p>
+
+                        <h4>Selection des clusters et ajout population à l'analyse :</h4>
+
+                        <pre>
+                            # Nous selectionnons ici le cluster 2 puis préparons les données pour ajouter la population pour pousser l'analyse.
+                            pays_suceptible = data_norm[data_norm["Clusters"]== 2]
+                            b = pays_suceptible.reset_index()
+                            data_pop = data_clus.set_index("Zone")
+                            del data_pop["Valeur"]
+                            a = data_pop.reset_index()
+                            pays = a.merge(b, how= "right").drop_duplicates()
+                            pays["Ratio"] = pays["Population"] / pays["Import"]
+                            pays = pays.sort_values(by="Ratio",ascending=False)
+                            pays
+
+                            plt.figure(figsize= (20,7))
+                            plt.title("Histogramme des pays suceptible de commencé le plus de poulet dans le monde")
+                            sns.barplot(x= "Zone", y = "Ratio", data= pays) 
+                            plt.show()
+                        </pre>
+    
+                        <h4>Output : </h4>
+                        <pre>
+                            <table border="1" class="dataframe">
+                                <thead>
+                                <tr style="text-align: right;">
+                                    <th></th>
+                                    <th>Zone</th>
+                                    <th>Population</th>
+                                    <th>Dispo_int</th>
+                                    <th>Export</th>
+                                    <th>Import</th>
+                                    <th>Nourriture</th>
+                                    <th>Produc</th>
+                                    <th>Clusters</th>
+                                    <th>Ratio</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th>37</th>
+                                    <td>France</td>
+                                    <td>64,842.51</td>
+                                    <td>0.41</td>
+                                    <td>0.87</td>
+                                    <td>2.25</td>
+                                    <td>0.39</td>
+                                    <td>0.42</td>
+                                    <td>2</td>
+                                    <td>28,859.88</td>
+                                </tr>
+                                <tr>
+                                    <th>66</th>
+                                    <td>Mexique</td>
+                                    <td>124,777.32</td>
+                                    <td>1.63</td>
+                                    <td>-0.21</td>
+                                    <td>4.75</td>
+                                    <td>1.60</td>
+                                    <td>1.03</td>
+                                    <td>2</td>
+                                    <td>26,243.80</td>
+                                </tr>
+                                <tr>
+                                    <th>0</th>
+                                    <td>Afrique du Sud</td>
+                                    <td>57,009.76</td>
+                                    <td>0.66</td>
+                                    <td>-0.09</td>
+                                    <td>2.29</td>
+                                    <td>0.65</td>
+                                    <td>0.39</td>
+                                    <td>2</td>
+                                    <td>24,896.66</td>
+                                </tr>
+                                <tr>
+                                    <th>56</th>
+                                    <td>Japon</td>
+                                    <td>127,502.73</td>
+                                    <td>0.80</td>
+                                    <td>-0.20</td>
+                                    <td>5.28</td>
+                                    <td>0.80</td>
+                                    <td>0.61</td>
+                                    <td>2</td>
+                                    <td>24,164.06</td>
+                                </tr>
+                                <tr>
+                                    <th>10</th>
+                                    <td>Allemagne</td>
+                                    <td>82,658.41</td>
+                                    <td>0.49</td>
+                                    <td>1.18</td>
+                                    <td>4.05</td>
+                                    <td>0.45</td>
+                                    <td>0.33</td>
+                                    <td>2</td>
+                                    <td>20,384.51</td>
+                                </tr>
+                                <tr>
+                                    <th>46</th>
+                                    <td>Iraq</td>
+                                    <td>37,552.78</td>
+                                    <td>-0.05</td>
+                                    <td>-0.23</td>
+                                    <td>2.05</td>
+                                    <td>-0.04</td>
+                                    <td>-0.25</td>
+                                    <td>2</td>
+                                    <td>18,291.01</td>
+                                </tr>
+                                <tr>
+                                    <th>85</th>
+                                    <td>Royaume-Uni de Grande-Bretagne et d'Irlande du...</td>
+                                    <td>66,727.46</td>
+                                    <td>0.71</td>
+                                    <td>0.56</td>
+                                    <td>3.72</td>
+                                    <td>0.70</td>
+                                    <td>0.45</td>
+                                    <td>2</td>
+                                    <td>17,957.13</td>
+                                </tr>
+                                <tr>
+                                    <th>19</th>
+                                    <td>Arabie saoudite</td>
+                                    <td>33,101.18</td>
+                                    <td>0.35</td>
+                                    <td>-0.20</td>
+                                    <td>3.41</td>
+                                    <td>0.37</td>
+                                    <td>-0.04</td>
+                                    <td>2</td>
+                                    <td>9,709.39</td>
+                                </tr>
+                                <tr>
+                                    <th>76</th>
+                                    <td>Pays-Bas</td>
+                                    <td>17,021.35</td>
+                                    <td>-0.14</td>
+                                    <td>2.87</td>
+                                    <td>2.80</td>
+                                    <td>-0.14</td>
+                                    <td>0.16</td>
+                                    <td>2</td>
+                                    <td>6,088.38</td>
+                                </tr>
+                                <tr>
+                                    <th>94</th>
+                                    <td>Émirats arabes unis</td>
+                                    <td>9,487.20</td>
+                                    <td>-0.12</td>
+                                    <td>-0.02</td>
+                                    <td>1.85</td>
+                                    <td>-0.11</td>
+                                    <td>-0.27</td>
+                                    <td>2</td>
+                                    <td>5,117.26</td>
+                                </tr>
+                                <tr>
+                                    <th>28</th>
+                                    <td>Chine - RAS de Hong-Kong</td>
+                                    <td>7,306.32</td>
+                                    <td>-0.18</td>
+                                    <td>1.22</td>
+                                    <td>4.40</td>
+                                    <td>-0.12</td>
+                                    <td>-0.28</td>
+                                    <td>2</td>
+                                    <td>1,658.74</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <h5>Histogramme :</h5>
+                            <img src="img/histo.png" alt="" width="1000" height="400"> <br>
+                        </pre><br>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<footer class="footer-area section-gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h4>À propos de cette page</h4>
+                    <p>Ce site a été créé pour présenter mes compétences en data analyst et mes projets en tant qu'entrepreneur. N'hésitez pas à me contacter pour toute opportunité de collaboration.</p>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="single-footer-widget">
+                    <h4>Contact</h4>
+                    <p>Email : corentin.bessone@hotmail.fr</p>
+                    <p>Téléphone : (+33) 7-67-78-54-91 / (+61) 481-873-678</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="js/FAQ.js"></script>
+<script src="js/projet.js"></script>
+<script src="js/tableau.js"></script>
+</body>
+</html>
