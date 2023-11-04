@@ -5,13 +5,22 @@ document.addEventListener("DOMContentLoaded", function() {
     contactForm.addEventListener("submit", function(event) {
         event.preventDefault();
 
-        // Vous pouvez ajouter ici votre code de traitement du formulaire
+        var formData = new FormData(contactForm);
 
-        // Affichez le message de confirmation
-        confirmationMessage.innerHTML = "Votre message a été envoyé avec succès !";
-
-        // Réinitialisez le formulaire après le traitement
-        contactForm.reset();
+        fetch(contactForm.getAttribute('action'), {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(function(response) {
+            confirmationMessage.style.display = 'block';
+            confirmationMessage.innerHTML = "Votre message a été envoyé avec succès !";
+            contactForm.reset();
+        })
+        .catch(function(error) {
+            console.error('Une erreur s\'est produite :', error);
+        });
     });
 });
-
