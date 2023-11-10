@@ -2095,8 +2095,8 @@ $black			: #222;
   }
 
   #logo {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
   }
   
   @media (max-width: 673px) {
