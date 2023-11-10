@@ -2093,6 +2093,11 @@ $black			: #222;
   #header.header-scrolled .main-menu {
     border-color: transparent;
   }
+
+  #logo {
+    display: flex;
+    align-items: center;
+  }
   
   @media (max-width: 673px) {
     #logo {

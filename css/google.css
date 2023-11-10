@@ -1,0 +1,18 @@
+/* Masquer l'icône par défaut du sélecteur Google Translate */
+body #google_translate_element .goog-te-gadget-icon {
+    display: none !important;
+}
+
+body #google_translate_element .goog-te-gadget-simple {
+    background: url('../img/united-kingdom.png') center center no-repeat !important;
+    background-size: cover !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    margin-left: 20px;
+}
+
+/* Masquer le texte à l'intérieur du sélecteur Google Translate */
+body #google_translate_element .VIpgJd-ZVi9od-xl07Ob-lTBxed span {
+    display: none !important;
+}
